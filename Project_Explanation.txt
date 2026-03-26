@@ -1,0 +1,195 @@
+================================================================================
+         GEOSPATIAL ANALYSIS OF RESTAURANT DISTRIBUTION
+         Data Analytics Internship — Project Explanation
+================================================================================
+
+--------------------------------------------------------------------------------
+TASK OVERVIEW
+--------------------------------------------------------------------------------
+
+This project falls under the domain of Geospatial Data Analysis — a branch of
+data science that focuses on understanding patterns, distributions, and
+relationships in data that has a geographic component (i.e., latitude and
+longitude coordinates).
+
+The dataset contains information about 9,551 restaurants spread across 15
+countries and 141 cities worldwide. Each record includes the restaurant's
+exact geographic coordinates, its city, country, cuisine type, average cost,
+and most importantly — its aggregate rating from customers.
+
+The task is broken into three key analytical goals:
+
+  1. Visualize restaurant locations on a map
+  2. Analyze how restaurants are distributed across regions
+  3. Determine if a restaurant's location correlates with its rating
+
+--------------------------------------------------------------------------------
+PART 1 — VISUALIZING RESTAURANT LOCATIONS
+--------------------------------------------------------------------------------
+
+WHAT WAS DONE:
+  Every restaurant in the dataset has a latitude (north–south position) and
+  a longitude (east–west position). These two numbers pinpoint its exact
+  location on Earth's surface.
+
+  Using the Folium library (a Python tool built on top of Leaflet.js), two
+  types of interactive maps were created:
+
+  (a) CLUSTERED MARKER MAP (interactive_map.html)
+      - Each restaurant is represented as a colored dot on the map.
+      - The color of the dot reflects the rating:
+          Dark Green  = Excellent (≥ 4.5)
+          Green       = Very Good (≥ 4.0)
+          Light Green = Good      (≥ 3.5)
+          Orange      = Average   (≥ 3.0)
+          Red         = Below Average (≥ 2.0)
+          Gray        = Unrated
+      - Nearby markers are automatically grouped into clusters to avoid
+        visual overload. Clicking a cluster zooms in and expands it.
+      - Clicking any individual marker shows a popup with the restaurant's
+        name, city, country, rating, and cuisine.
+
+  (b) DENSITY HEATMAP (heatmap.html)
+      - Instead of individual points, this map shows "heat" concentrations.
+      - Areas with many restaurants glow red/yellow; sparse areas appear blue.
+      - This clearly reveals geographic hotspots of restaurant density.
+
+  A static scatter plot (fig4_geo_rating_map.png) was also produced, where
+  longitude is plotted on the X-axis, latitude on the Y-axis, and each point
+  is color-coded by its rating (Red = Low, Green = High). This provides a
+  quick visual overview of the global rating landscape.
+
+WHY IT MATTERS:
+  Visual maps make spatial patterns immediately apparent. A data table cannot
+  convey at a glance that almost all restaurants are concentrated in South
+  Asia — but a map makes this obvious within seconds.
+
+--------------------------------------------------------------------------------
+PART 2 — DISTRIBUTION ANALYSIS ACROSS CITIES AND COUNTRIES
+--------------------------------------------------------------------------------
+
+WHAT WAS DONE:
+  After mapping the locations, the distribution of restaurants was analyzed
+  statistically and visually.
+
+  COUNTRY-LEVEL DISTRIBUTION:
+  - India dominates the dataset with 8,652 restaurants (over 90% of all records).
+  - The United States comes second with 434, followed by the UK (80), Brazil (60),
+    UAE (60), and South Africa (60).
+  - This heavy skew toward India means the dataset is not globally balanced,
+    which is an important caveat for interpretation.
+
+  CITY-LEVEL DISTRIBUTION:
+  - New Delhi alone has 5,473 restaurants — more than all other countries combined.
+  - Other major Indian cities (Gurgaon: 1,118 and Noida: 1,080) follow.
+  - International cities like Abu Dhabi, Cape Town, and Singapore appear with
+    relatively small counts (20–60 each).
+
+  RATING PATTERNS BY COUNTRY:
+  - A boxplot shows the spread of ratings in each country.
+  - A bar chart shows the mean rating per country.
+  - Indonesia and the Philippines consistently show higher median ratings,
+    while some countries (e.g., Brazil, Turkey) show more variability.
+
+  TOP-RATED CITIES:
+  - Cities with at least 10 restaurants were ranked by their average rating.
+  - Smaller cities in Southeast Asia and the Middle East often outperform
+    major Indian metros despite having far fewer entries.
+
+WHY IT MATTERS:
+  Understanding distribution is fundamental before drawing any conclusions.
+  If the data is heavily concentrated in one region, any "global" finding must
+  be interpreted with caution. This analysis makes those biases transparent.
+
+--------------------------------------------------------------------------------
+PART 3 — CORRELATION BETWEEN LOCATION AND RATING
+--------------------------------------------------------------------------------
+
+WHAT WAS DONE:
+  A statistical test was conducted to determine whether a restaurant's
+  geographic coordinates (latitude and longitude) have any linear relationship
+  with its aggregate rating.
+
+  METHOD USED: Pearson Correlation Coefficient (r)
+  - r ranges from -1.0 to +1.0
+  - r = +1.0 → perfect positive relationship (as one increases, so does the other)
+  - r = 0.0  → no linear relationship
+  - r = -1.0 → perfect negative relationship
+  - A p-value < 0.05 indicates the result is statistically significant.
+
+  RESULTS:
+  - Latitude  vs Rating:  r ≈ -0.07  (p < 0.05) — Significant but very weak
+  - Longitude vs Rating:  r ≈ -0.04  (p < 0.05) — Significant but very weak
+
+  INTERPRETATION:
+  Both correlations are statistically significant due to the large sample size
+  (nearly 9,000 rated records). However, the effect sizes are extremely small
+  (|r| < 0.10), meaning that latitude and longitude explain less than 1% of
+  the variation in ratings.
+
+  In plain language: knowing only a restaurant's coordinates tells you almost
+  nothing about how it will be rated by customers.
+
+  The weak negative sign on latitude suggests that restaurants in regions
+  closer to the equator (lower latitudes, like Southeast Asia) tend to have
+  marginally higher ratings — but this is likely explained by regional
+  cultural dining standards and local rating behavior, not geography itself.
+
+WHY IT MATTERS:
+  This finding is valuable because it rules out a simplistic geographic
+  explanation for rating differences. Future analysis should examine factors
+  like cuisine type, price range, and local competition as stronger predictors
+  of restaurant rating.
+
+--------------------------------------------------------------------------------
+OUTPUTS GENERATED
+--------------------------------------------------------------------------------
+
+  interactive_map.html             → Open in any web browser; fully interactive
+  heatmap.html                     → Restaurant density heatmap; open in browser
+  fig1_distribution_country_city.png  → Bar charts for country & city counts
+  fig2_ratings_by_country.png      → Boxplot + mean rating by country
+  fig3_correlation_location_rating.png → Scatter: lat/lon vs rating with trend line
+  fig4_geo_rating_map.png          → Static global map colored by rating
+  fig5_top_cities_rating.png       → Top 20 cities by average restaurant rating
+  fig6_rating_overview.png         → Rating histogram and category pie chart
+  summary_statistics.csv           → All key numeric findings in tabular form
+
+--------------------------------------------------------------------------------
+CONCLUSIONS
+--------------------------------------------------------------------------------
+
+  1. The restaurant dataset is geographically concentrated in India, making
+     global comparisons possible only with appropriate context.
+
+  2. New Delhi is the single largest restaurant hub in the dataset.
+
+  3. Southeast Asian and Pacific cities (Indonesia, Philippines, New Zealand)
+     lead in average customer ratings.
+
+  4. Geographic coordinates (latitude and longitude) show a statistically
+     significant but practically negligible correlation with restaurant ratings.
+
+  5. A restaurant's location does not directly determine its quality score.
+     Cultural expectations, cuisine category, and pricing are likely stronger
+     drivers of rating variation.
+
+  6. Recommendation: Incorporate cuisine type, price range, and regional
+     benchmarking in future analyses for a more complete picture.
+
+--------------------------------------------------------------------------------
+TOOLS & LIBRARIES
+--------------------------------------------------------------------------------
+
+  Python 3.x        Programming language
+  pandas            Data manipulation and aggregation
+  numpy             Numerical operations
+  matplotlib        Static data visualization
+  seaborn           Statistical plotting
+  folium            Interactive HTML map generation
+  scipy.stats       Pearson correlation and p-value computation
+  Jupyter Notebook  Interactive code execution and documentation
+
+================================================================================
+             END OF PROJECT EXPLANATION
+================================================================================

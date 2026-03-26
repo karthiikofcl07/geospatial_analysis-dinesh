@@ -1,0 +1,14 @@
+Metric,Value
+Total Restaurants,9551
+Countries Covered,15
+Cities Covered,141
+Rated Restaurants,7403
+Global Mean Rating,3.44
+Global Median Rating,3.4
+Rating Std Dev,0.552
+Latitude–Rating Correlation (r),-0.1893
+Longitude–Rating Correlation (r),-0.299
+Latitude p-value,5.4648e-59
+Longitude p-value,2.2387e-148
+Best Rated Country,Philippines
+Most Restaurants In,India
